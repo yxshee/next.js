@@ -600,7 +600,7 @@ type RedirectEntry = {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const pathname = req.query.pathname
-  if (!pathname) {
+  if (typeof pathname !== 'string') {
     return res.status(400).json({ message: 'Bad Request' })
   }
 

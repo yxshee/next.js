@@ -612,6 +612,10 @@ export async function GET(request: NextRequest) {
   const token = request.nextUrl.searchParams.get('session_token')
   const redirectUrl = request.nextUrl.searchParams.get('redirect_url')
 
+  if (!token) {
+    return new Response('Missing session token', { status: 400 })
+  }
+
   const destination = new URL(redirectUrl ?? '/', request.url)
   // Prevent open redirects: only allow same-origin destinations
   if (destination.origin !== request.nextUrl.origin) {
@@ -639,6 +643,10 @@ import { NextResponse } from 'next/server'
 export async function GET(request) {
   const token = request.nextUrl.searchParams.get('session_token')
   const redirectUrl = request.nextUrl.searchParams.get('redirect_url')
+
+  if (!token) {
+    return new Response('Missing session token', { status: 400 })
+  }
 
   const destination = new URL(redirectUrl ?? '/', request.url)
   // Prevent open redirects: only allow same-origin destinations
